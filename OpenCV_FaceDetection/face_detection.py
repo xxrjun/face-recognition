@@ -1,38 +1,29 @@
 import cv2
 
-# 辨識圖片
-img1 = cv2.imread('src/moomoo.jpg')
-img1 = cv2.resize(img1, (0, 0), fx=0.22, fy=0.22)
-gray = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
-faceCascade = cv2.CascadeClassifier('face_detect.xml')
-faceRect = faceCascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=3)
-print(len(faceRect))
 
-for (x, y, w, h) in faceRect:
-    cv2.rectangle(img1, (x, y), (x + w, y + h), (0, 255, 0), 4)
+def face_detect(img_path, fx, fy, sF, minN):
+    img = cv2.imread(img_path)
+    img = cv2.resize(img, (0, 0), fx, fy)
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    faceCascade = cv2.CascadeClassifier('face_detect.xml')
+    faceRect = faceCascade.detectMultiScale(gray, scaleFactor=sF, minNeighbors=minN)
 
+    for (x, y, w, h) in faceRect:
+        cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 4)
 
-img2 = cv2.imread('src/people.jpg')
-img2 = cv2.resize(img2, (0, 0), fx=0.6, fy=0.6)
-gray = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
-faceCascade = cv2.CascadeClassifier('face_detect.xml')
-faceRect = faceCascade.detectMultiScale(gray, 1.1, 5)
-print(len(faceRect))
-
-for (x, y, w, h) in faceRect:
-    cv2.rectangle(img2, (x, y), (x + w, y + h), (0, 255, 0), 4)
+    return img
 
 
-img3 = cv2.imread('src/ghostintheshell2.jpg')
-img3 = cv2.resize(img3, (0, 0), fx=0.2, fy=0.2)
-gray = cv2.cvtColor(img3, cv2.COLOR_BGR2GRAY)
-faceCascade = cv2.CascadeClassifier('face_detect.xml')
-faceRect = faceCascade.detectMultiScale(gray, 1.1, 6)
-print(len(faceRect))
+# detect
+img1_path = 'src/moomoo.jpg'
+img1 = face_detect(img1_path, 0.22, 0.22, 1.1, 3)
 
-for (x, y, w, h) in faceRect:
-    cv2.rectangle(img3, (x, y), (x + w, y + h), (0, 255, 0), 4)
-blurImg3 = cv2.GaussianBlur(img3, (3, 3), 10000, faceRect)
+img2_path = 'src/people.jpg'
+img2 = face_detect(img1_path, 0.6, 0.6, 1.1, 5)
+
+
+img3_path = 'src/ghostintheshell2.jpg'
+img3 = face_detect(img1_path, 0.2, 0.2, 1.1, 6)
 
 
 cv2.imshow('img1', img1)
