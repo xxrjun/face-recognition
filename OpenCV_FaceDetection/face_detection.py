@@ -1,9 +1,9 @@
 import cv2
 
 
-def face_detect(img_path, fx, fy, sF, minN):
+def face_detect(img_path, fX, fY, sF, minN):
     img = cv2.imread(img_path)
-    img = cv2.resize(img, (0, 0), fx, fy)
+    img = cv2.resize(img, (0, 0), fx=fX, fy=fY)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     faceCascade = cv2.CascadeClassifier('face_detect.xml')
     faceRect = faceCascade.detectMultiScale(gray, scaleFactor=sF, minNeighbors=minN)
@@ -19,11 +19,10 @@ img1_path = 'src/moomoo.jpg'
 img1 = face_detect(img1_path, 0.22, 0.22, 1.1, 3)
 
 img2_path = 'src/people.jpg'
-img2 = face_detect(img1_path, 0.6, 0.6, 1.1, 5)
-
+img2 = face_detect(img2_path, 0.6, 0.6, 1.1, 5)
 
 img3_path = 'src/ghostintheshell2.jpg'
-img3 = face_detect(img1_path, 0.2, 0.2, 1.1, 6)
+img3 = face_detect(img3_path, 0.5, 0.5, 1.1, 7)
 
 
 cv2.imshow('img1', img1)
