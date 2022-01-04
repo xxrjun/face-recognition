@@ -45,7 +45,7 @@ def feature_extract(img_rgb, detections):
     for i, face_info in enumerate(detections):
         face_position = [face_info['x1'], face_info['y1'], face_info['x2'], face_info['y2']]
         face_landmarks = [face_info['left_eye'], face_info['right_eye'],
-                         face_info['nose'], face_info['left_lip'], face_info['right_lip']]
+                          face_info['nose'], face_info['left_lip'], face_info['right_lip']]
 
         positions.append(face_position)
         landmarks.append(face_landmarks)
@@ -59,10 +59,10 @@ def feature_extract(img_rgb, detections):
         first_input_name = sess.get_inputs()[0].name
         first_output_name = sess.get_outputs()[0].name
 
-        prediction = sess.run([first_output_name], {first_input_name : input_blob})[0]
+        prediction = sess.run([first_output_name], {first_input_name: input_blob})[0]
         final_embedding = normalize(prediction).flatten()
 
-        embeddings[0] = final_embedding
+        embeddings[i] = final_embedding
 
     return positions, landmarks, embeddings
 
@@ -93,7 +93,6 @@ def load_file(file_path):
 
         file_data[person_name] = person_pictures
 
-
     return file_data
 
 
@@ -116,7 +115,8 @@ def create_db(db_path, file_path):
             final_embedding = sum_embeddings / len(picture_path)
             adapt_embedding = adapt_array(final_embedding)
 
-            conn_db.execute("INSERT INTO face_info (ID, NAME, Embeddings) VALUES (?, ?, ?)", (i, person_name, adapt_embedding))
+            conn_db.execute("INSERT INTO face_info (ID, NAME, Embeddings) VALUES (?, ?, ?)",
+                            (i, person_name, adapt_embedding))
         conn_db.commit()
         conn_db.close()
     else:
@@ -125,7 +125,7 @@ def create_db(db_path, file_path):
 
 # 5. face recognition
 def compare_face(embeddings, threshold):
-    conn_db = sqlite3.connect('database.db')
+    conn_db = sqlite3.connect(db_path)
     cursor = conn_db.execute("SELECT * FROM face_info")
     db_data = cursor.fetchall()
 
@@ -155,7 +155,6 @@ onnx_path = 'model/arcface_r100_v1.onnx'
 EP_List = ['CPUExecutionProvider']
 sess = ort.InferenceSession(onnx_path, providers=EP_List)
 
-
 # create db
 db_path = 'database.db'
 file_path = 'database'
@@ -165,12 +164,10 @@ sqlite3.register_converter("ARRAY", convert_array)
 if not os.path.exists(db_path):
     create_db(db_path, file_path)
 
-
 # load picture we want to recognize
 img_path = 'src/four_people.jpg'
 img_rgb, detections = face_detect(img_path)
 position, landmarks, embeddings = feature_extract(img_rgb, detections)
-
 
 # set threshold and compare every face in the picture
 threshold = 1
@@ -180,14 +177,11 @@ for i, embedding in enumerate(embeddings):
 
     cv2.rectangle(img_rgb, (position[i][0], position[i][1]), (position[i][2], position[i][3]), (0, 255, 0), 2)
     font = cv2.FONT_HERSHEY_SIMPLEX
-    cv2.putText(img_rgb, name + ', ' + str(distance), (position[i][0] + 10, position[i][1] - 10), font, 0.8, (255, 0, 0), 2)
-
+    cv2.putText(img_rgb, name + ', ' + str(distance), (position[i][0] + 10, position[i][1] - 10), font, 0.8,
+                (0, 255, 0), 2)
 
 # show the result
 plt.figure(figsize=(10, 10))
 plt.imshow(img_rgb / 255)
 _ = plt.axis('off')
 plt.show()
-
-
-
