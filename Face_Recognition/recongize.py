@@ -96,6 +96,7 @@ def load_file(file_path):
     return file_data
 
 
+# 4. Create Database
 def create_db(db_path, file_path):
     if os.path.exists(file_path):
         conn_db = sqlite3.connect(db_path)
