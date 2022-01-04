@@ -32,7 +32,6 @@ def face_align(img_rgb, face_landmarks):
 
     return aligned_rgb
 
-
 detector = RetinaFace(quality='normal')  # init with normal accuracy option
 img_path = 'database/Elon Musk/elon_musk_1.jpg'
 img_rgb, detections = face_detect(img_path)
@@ -42,9 +41,8 @@ face_positions = []
 face_landmarks = []
 for i, face_info in enumerate(detections):
     face_positions = [face_info['x1'], face_info['y1'], face_info['x2'], face_info['y2']]
-    face_landmarks = [face_info['left_eye'], face_info['right_eye'], face_info['nose'], face_info['left_lip'],
-                      face_info['right_lip']]
-
+    face_landmarks = [face_info['left_eye'], face_info['right_eye'], face_info['nose'],
+                      face_info['left_lip'], face_info['right_lip']]
 
 # 3. Feature Extraction
 onnx_path = 'model/arcface_r100_v1.onnx'
@@ -53,14 +51,17 @@ EP_list = ['CPUExecutionProvider']
 # Create inference session
 sess = ort.InferenceSession(onnx_path, providers=EP_list)
 
-aligned = face_align(img_rgb, face_landmarks)  # 取得對齊後的圖片
-t_aligned = np.transpose(aligned, (2, 0, 1))  # 轉置
+# 取得對齊後的圖片並作轉置
+aligned = face_align(img_rgb, face_landmarks)
+t_aligned = np.transpose(aligned, (2, 0, 1))
 
-inputs = t_aligned.astype(np.float32)  # 將轉置後的人臉轉換 dtype 為 float32
-input_blob = np.expand_dims(inputs, axis=0)  # 擴充矩陣維度，因為後續函式需要 二維矩陣
+# 將轉置後的人臉轉換 dtype 為 float32，並擴充矩陣維度，因為後續函式需要二維矩陣
+inputs = t_aligned.astype(np.float32)
+input_blob = np.expand_dims(inputs, axis=0)
 
-first_input_name = sess.get_inputs()[0].name  # get the outputs metadata as a list of :class:`onnxruntime.NodeArg`
-first_output_name = sess.get_outputs()[0].name  # get the inputs metadata as a list of :class:`onnxruntime.NodeArg`
+# get the outputs metadata and inputs metadata
+first_input_name = sess.get_inputs()[0].name
+first_output_name = sess.get_outputs()[0].name
 
 # inference run using image_data as the input to the model
 # pass a tuple rather than a single numpy ndarray.
@@ -69,3 +70,7 @@ prediction = sess.run([first_output_name], {first_input_name: input_blob})[0]
 # 進行正規化並且轉成一維陣列
 final_embedding = normalize(prediction).flatten()
 print(final_embedding)
+
+
+
+

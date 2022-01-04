@@ -9,14 +9,16 @@ img_path = 'database/Elon Musk/elon_musk_1.jpg'
 img_bgr = cv2.imread(img_path, cv2.IMREAD_COLOR)
 img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
 
-# faces is list of face dictionary
 # 取得人臉及特徵的座標值 landmarks
 detections = detector.predict(img_rgb)
 print(detections)
 print(len(detections))
 
-img_result = detector.draw(img_rgb, detections)  # 將取得的座標值畫上記號及框框
-img = cv2.cvtColor(img_result, cv2.COLOR_RGB2BGR)  # 轉回 cv2 可讀的 gbr
+# 將取得的座標值畫上記號及框框
+img_result = detector.draw(img_rgb, detections)
+
+# 轉回 cv2 可讀的 gbr
+img = cv2.cvtColor(img_result, cv2.COLOR_RGB2BGR)
 
 # show using cv2
 cv2.imshow('img', img)

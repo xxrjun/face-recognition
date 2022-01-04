@@ -36,6 +36,7 @@ def face_align(img_rgb, face_landmarks):
 
     return aligned_rgb
 
+
 # 3. feature extraction. return positions, landmarks, embeddings
 def feature_extraction(img_rgb, detections):
     position = []
@@ -71,7 +72,6 @@ onnx_path = 'model/arcface_r100_v1.onnx'
 EP_List = ['CPUExecutionProvider']
 sess = ort.InferenceSession(onnx_path, providers=EP_List)
 
-
 # 4. Create Database
 def adapt_array(arr):
     out = io.BytesIO()
@@ -85,9 +85,10 @@ def convert_array(text):
     out.seek(0)
     return np.load(out)
 
+
 # 將 file_path 底下的資料全部存進 file_data (list)
 def load_file(file_path):
-    file_data = {}
+    file_Ddata = {}
     for person_name in os.listdir(file_path):
         person_file = os.path.join(file_path, person_name)
 
@@ -139,6 +140,18 @@ if os.path.exists(file_path):
                         (i, person_name, adapt_embedding))
     conn_db.commit()
     conn_db.close()
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
