@@ -1,4 +1,13 @@
-環境安裝
+## 本人環境
+* Python 3.7.11 (3.6.* or 3.7.* 都可以)
+* Tensorflow 2.1.0 (retinaface 需要這個版本的 tensorflow)
+## 環境安裝
 ```
 $ pip install -r requirment.txt
 ```
+## Face Recognition
+1. Face Detection : using RetinaFace
+2. Face Alignment:
+3. Feature Extraction : using model : https://github.com/SthPhoenix/InsightFace-REST
+4. Database : using sqlite3
+5. Face Reconition
