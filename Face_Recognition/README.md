@@ -6,8 +6,8 @@
 $ pip install -r requirment.txt
 ```
 ## Face Recognition
-1. Face Detection : using RetinaFace
-2. Face Alignment:
-3. Feature Extraction : using model : https://github.com/SthPhoenix/InsightFace-REST
-4. Database : using sqlite3
-5. Face Reconition
+### 1. Face Detection : using RetinaFace
+### 2. Face Alignment
+### 3. Feature Extraction : using model arcface_r100_v1 : https://github.com/SthPhoenix/InsightFace-REST
+### 4. Database : using SQLite
+### 5. Face Reconition
