@@ -8,6 +8,7 @@ import io
 import os
 import sqlite3
 import matplotlib.pyplot as plt
+import winsound
 
 
 # 1. face detection
@@ -195,7 +196,9 @@ while True and found==False:  # 讀取每一幀去播放影片
                 plt.figure(figsize=(10, 10))
                 plt.imshow(img_rgb / 255)
                 _ = plt.axis('off')
+                winsound.Beep(600, 1000)
                 plt.show()
+
                 found = True
         # cv2.rectangle(frame, (position[i][0], position[i][1]), (position[i][2], position[i][3]), (0, 255, 0),
         #               2)
