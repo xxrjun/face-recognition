@@ -1,5 +1,5 @@
-from retinaface import RetinaFace
 import cv2
+from retinaface import RetinaFace
 import numpy as np
 from skimage import transform as trans
 import onnxruntime as ort
