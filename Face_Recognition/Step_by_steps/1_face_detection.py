@@ -5,7 +5,7 @@ from retinaface import RetinaFace
 detector = RetinaFace(quality='normal')
 
 # 讀取圖檔，因為 opencv 預設是 bgr 因此要轉成 rgb
-img_path = 'database/Elon Musk/elon_musk_1.jpg'
+img_path = '..\src\elon_musk_2.jpg'
 img_bgr = cv2.imread(img_path, cv2.IMREAD_COLOR)
 img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
 
@@ -13,7 +13,7 @@ img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
 detections = detector.predict(img_rgb)
 print(detections)
 print(len(detections))
-
+print(detections[0]['x1'])
 # 將取得的座標值畫上記號及框框
 img_result = detector.draw(img_rgb, detections)
 

@@ -175,35 +175,39 @@ if not os.path.exists(db_path):
 
 cap = cv2.VideoCapture('src/ericWang.mp4')
 found = False
-while True and found==False:  # 讀取每一幀去播放影片
+count = 0
+while True and not found:  # 讀取每一幀去播放影片
     ret, frame = cap.read()  # 回傳兩個值(boolean, next frame)
     if ret:
         img_rgb, detections = face_detectBGR(frame)
-        position, landmarks, embeddings = feature_extract(img_rgb, detections)
-        # set threshold and compare every face in the picture
-        threshold = 1
-        for i, embedding in enumerate(embeddings):
-            name, distance, total_result = compare_face(embedding, threshold)
-            if distance < threshold:
-                cv2.rectangle(img_rgb, (position[i][0], position[i][1]), (position[i][2], position[i][3]), (0, 255, 0),
-                              2)
-                font = cv2.FONT_HERSHEY_SIMPLEX
-                cv2.putText(img_rgb, name + ', ' + str(distance), (position[i][0] + 10, position[i][1] - 10), font, 0.8,
-                            (0, 255, 0), 2)
-                print('Found Person!')
+        if count == 5:
+            count = 0
+            position, landmarks, embeddings = feature_extract(img_rgb, detections)
+            # set threshold and compare every face in the picture
+            threshold = 1
+            for i, embedding in enumerate(embeddings):
+                name, distance, total_result = compare_face(embedding, threshold)
+                if distance < threshold:
+                    cv2.rectangle(img_rgb, (position[i][0], position[i][1]), (position[i][2], position[i][3]), (0, 255, 0),
+                                  2)
+                    font = cv2.FONT_HERSHEY_SIMPLEX
+                    cv2.putText(img_rgb, name + ', ' + str(distance), (position[i][0] + 10, position[i][1] - 10), font, 0.8,
+                                (0, 255, 0), 2)
+                    print('Found Person!')
 
-                # show the result
-                plt.figure(figsize=(10, 10))
-                plt.imshow(img_rgb / 255)
-                _ = plt.axis('off')
-                winsound.Beep(600, 1000)
-                plt.show()
+                    # show the result
+                    plt.figure(figsize=(10, 10))
+                    plt.imshow(img_rgb / 255)
+                    _ = plt.axis('off')
+                    winsound.Beep(600, 1000)
+                    plt.show()
 
-                found = True
-        # cv2.rectangle(frame, (position[i][0], position[i][1]), (position[i][2], position[i][3]), (0, 255, 0),
+                    found = True
+        # cv2.rectangle(frame, (detections[0]['x1'], detections[0]['y1']), (detections[0]['x2'], detections[0]['y2']), (0, 255, 0),
         #               2)
         frame = cv2.resize(frame, (0, 0), fx=0.8, fy=0.8)
         cv2.imshow('video', frame)
+        count += 1
     else:
         print('Not Found!')
         break
