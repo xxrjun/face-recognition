@@ -2,11 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="803fb290-b1ac-4f30-bb58-fdadafc96ca4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/Face_Recongition.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/video.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../video.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Step_by_steps/1_face_detection.py" beforeDir="false" afterPath="$PROJECT_DIR$/Step_by_steps/1_face_detection.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Step_by_steps/2_face_alignment.py" beforeDir="false" afterPath="$PROJECT_DIR$/Step_by_steps/2_face_alignment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Step_by_steps/3_feature_extraction.py" beforeDir="false" afterPath="$PROJECT_DIR$/Step_by_steps/3_feature_extraction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Step_by_steps/4_create_database.py" beforeDir="false" afterPath="$PROJECT_DIR$/Step_by_steps/4_create_database.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +52,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -221,6 +226,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
