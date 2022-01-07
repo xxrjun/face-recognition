@@ -1,9 +1,10 @@
 import cv2
 
 
-
 # 取得視訊鏡頭
 cap = cv2.VideoCapture('src/ericWang.mp4')
+fps = cap.get(cv2.CAP_PROP_FPS)
+print(fps)
 while True:  # 讀取每一幀去播放影片
     ret, frame = cap.read()  # 回傳兩個值(boolean, next frame)
     if ret:

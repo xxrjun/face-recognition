@@ -174,13 +174,15 @@ if not os.path.exists(db_path):
 
 
 cap = cv2.VideoCapture('src/ericWang.mp4')
+fps = cap.get(cv2.CAP_PROP_FPS)
+print(fps)
 found = False
 count = 0
 while True and not found:  # 讀取每一幀去播放影片
     ret, frame = cap.read()  # 回傳兩個值(boolean, next frame)
     if ret:
         img_rgb, detections = face_detectBGR(frame)
-        if count == 5:
+        if count == fps // 5:  # 0.2 秒檢查一次
             count = 0
             position, landmarks, embeddings = feature_extract(img_rgb, detections)
             # set threshold and compare every face in the picture

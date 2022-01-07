@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="803fb290-b1ac-4f30-bb58-fdadafc96ca4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Step_by_steps/1_face_detection.py" beforeDir="false" afterPath="$PROJECT_DIR$/Step_by_steps/1_face_detection.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/play_video.py" beforeDir="false" afterPath="$PROJECT_DIR$/play_video.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/video_detect.py" beforeDir="false" afterPath="$PROJECT_DIR$/video_detect.py" afterDir="false" />
     </list>
@@ -172,8 +171,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.video_detect (1)" />
-        <item itemvalue="Python.1_face_detection" />
         <item itemvalue="Python.play_video" />
+        <item itemvalue="Python.1_face_detection" />
         <item itemvalue="Python.video_detect" />
         <item itemvalue="Python.recongize" />
       </list>
