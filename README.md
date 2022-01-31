@@ -10,7 +10,8 @@ arcface_r100_v1 https://drive.google.com/file/d/1sj170K3rbo5iOdjvjHw-hKWvXgH4dld
 ## Face Recognition
 ### 1. Face Detection : using RetinaFace
 ### 2. Face Alignment
-### 3. Feature Extraction : using model arcface_r100_v1 : https://github.com/SthPhoenix/InsightFace-REST
+### 3. Feature Extraction : 
+using model arcface_r100_v1 : https://github.com/SthPhoenix/InsightFace-REST
 ### 4. Database : using SQLite
 ### 5. Face Reconition
 
