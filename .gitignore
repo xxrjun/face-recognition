@@ -113,3 +113,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 Face_Recognition/model/arcface_r100_v1.onnx
+.DS_Store
