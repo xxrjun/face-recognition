@@ -42,7 +42,7 @@ $ pip install -r requirment.txt
 
 ![face_recognition_application.png](https://github.com/xxrjun/Face-Recognition-Python/blob/main/readme-src/face_recognition_application.png)
 
-## 1.3  Face Recognition 主要三部分
+### Face Recognition 主要三部分
 
 - **人臉偵測 Face Detection**
 
@@ -59,8 +59,6 @@ $ pip install -r requirment.txt
 $ pip install scikit-learn
 $ pip install onnxruntime
 ```
-
-
 
 ## Step 1. Face Detection
 
