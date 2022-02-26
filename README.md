@@ -38,6 +38,29 @@ $ pip install -r requirment.txt
 
 - 從擁有 k 個人物的 DataBase 確定一張臉的身分
 - **`1 : k`**
+- 應用
+
+![face_recognition_application.png](https://github.com/xxrjun/Face-Recognition-Python/blob/main/readme-src/face_recognition_application.png)
+
+## 1.3  Face Recognition 主要三部分
+
+- **人臉偵測 Face Detection**
+
+- **人臉對齊 Face Alignment**
+
+- **特徵表徵 Feature Representation**
+
+# 五大流程
+**Face Detection -> Face Alignment -> Feature Extraction -> Create Database -> Face Recognition**
+
+先安裝相關 library
+
+```python
+$ pip install scikit-learn
+$ pip install onnxruntime
+```
+
+
 
 ## Step 1. Face Detection
 
