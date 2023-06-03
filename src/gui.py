@@ -15,6 +15,7 @@ class GUI:
         # define font
         button_font = ('Arial', 18, 'bold')
 
+        # create buttons
         button_img = tk.Button(self.root, text="Recognize Image", width=40, height=3, command=recognize_image, bg='#0052cc', fg='#ffffff')
         button_img['font'] = button_font
         button_img.pack(fill=tk.X, padx=50, pady=10)
