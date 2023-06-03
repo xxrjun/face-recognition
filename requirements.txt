@@ -1,0 +1,7 @@
+numpy==1.22.0
+opencv-python==4.6.0.66
+onnxruntime==1.15.0
+matplotlib==3.7.1
+retinaface==1.1.1
+scikit-image==0.20.0
+scikit-learn==1.2.2
