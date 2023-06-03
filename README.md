@@ -9,7 +9,7 @@
 
 主要區別:
 
-- 結合兩者知識，並做出更詳細的註解(docstring and comment)
+- 結合兩者，添加相關知識、資料，並做出更詳細的註解(docstring and comment)
 - 使用 Tkinter 做 GUI
 - 優化檔案結構、模組化
 - 除了辨識圖片外，也可以辨識影片中的人臉
@@ -28,9 +28,9 @@
 - [五大流程](#五大流程)
   - [Step 1. Face Detection](#step-1-face-detection)
   - [Step 2. Face Alignment](#step-2-face-alignment)
-  - [Step 3. **Feature extraction**](#step-3-feature-extraction)
+  - [Step 3. Feature extraction](#step-3-feature-extraction)
   - [Step 4. Create Database](#step-4-create-database)
-  - [Step 5. **Face Recognition**](#step-5-face-recognition)
+  - [Step 5. Face Recognition](#step-5-face-recognition)
 - [Face Recognition in Picture - DEMO](#face-recognition-in-picture---demo)
 - [參考資料、網頁](#參考資料網頁)
 
@@ -50,6 +50,31 @@
 ```
 $ pip install -r requirements.txt
 ```
+
+或使用 pipenv
+
+1. 安裝 pipenv
+
+    ```bash
+    $ pip install pipenv
+    ```
+
+2. 在專案目錄中創建一個新的虛擬環境，並使用 Python 3.9
+
+    > 本機系統中必須有 Python 3.9，pipenv 才能找到並使用
+
+    ```bash
+    $ pipenv shell --python 3.9
+    ```
+
+    這會創建一個新的虛擬環境，並且將終端機/命令行界面設置到這個虛擬環境中。
+
+3. 用 pipenv 安裝 requirements.txt 文件中的所有套件
+
+    ```bash
+    pipenv install -r requirements.txt
+    ```
+
 
 ### 下載辨識模型
 
@@ -91,18 +116,18 @@ $ pip install -r requirements.txt
 
 1. Face Detection
 2. Face Alignment
-3. Feature Extraction
+3. Feature extraction
 4. Create Database
 5. Face Recognition
 
 ## Step 1. Face Detection
 
-**偵測人臉並取得座標值**
+> **偵測人臉並取得座標值**
 
-使用 [RetinaFace](https://pypi.org/project/retinaface/) 進行人臉辨識
+使用 [**RetinaFace**](https://pypi.org/project/retinaface/) 進行人臉辨識
 
-也可用 [MTCNN](https://pypi.org/project/mtcnn/)，不過 RetinaFace 的辨識表現略為優異。  
-參考 → [RetinaFace: Single-stage Dense Face Localisation in the Wild](https://arxiv.org/pdf/1905.00641.pdf)
+> 也可用 [MTCNN](https://pypi.org/project/mtcnn/)，不過 RetinaFace 的辨識表現略為優異。  
+> 參考 → [RetinaFace: Single-stage Dense Face Localisation in the Wild](https://arxiv.org/pdf/1905.00641.pdf)
 
 <img src="./assets/README/accuracy.png" style="width: 500px">
 
@@ -142,22 +167,32 @@ cv2.destroyWindow('img')
 **output**
 
 ```python
-[{'x1': 238, 'y1': 107, 'x2': 396, 'y2': 311, 'left_eye': (285, 191),
-  'right_eye': (358, 191), 'nose': (326, 224), 'left_lip': (295, 265), '
-      right_lip': (352, 265)}]
+[{'x1': 238, 'y1': 107, 'x2': 396, 'y2': 311, 'left_eye': (285, 191), 'right_eye': (358, 191), 
+  'nose': (326, 224), 'left_lip': (295, 265), 'right_lip': (352, 265)}]
 ```
 
 ![face-detection-ElonMusk.png](assets/README/face-detection-ElonMusk.png)
 
-做成 function 以方便調用
+模組化以方便後續調用
 
 ```python
-def face_detect(img_path):
+# in src/face_detection.py
+
+def face_detect(img_path, detector):
     img_bgr = cv2.imread(img_path, cv2.IMREAD_COLOR)
     img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
     detections = detector.predict(img_rgb)
 
     return img_rgb, detections
+
+
+# 這個是辨識影片為求方便會用到的
+def face_detect_bgr(img_bgr, detector):
+    img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
+    detections = detector.predict(img_rgb)
+
+    return img_rgb, detections
+
 ```
 
 若出現錯誤可能是因為無法導入 shapely.geometry
@@ -172,11 +207,11 @@ pip install <your Shapely package path>
 
 **將人臉對齊，也就是將傾斜的人臉轉至端正的角度。**
 
-要將人臉對齊就得先定義對齊的座標 (**標準臉的座標**)。
-參考 → [link](https://github.com/onnx/models/blob/master/vision/body_analysis/arcface/dependencies/arcface_inference.ipynb)
+> 要將人臉對齊就得先定義對齊的座標 (**標準臉的座標**)。
+> 參考 → [Inference Demo for ArcFace models](https://github.com/onnx/models/blob/master/vision/body_analysis/arcface/dependencies/arcface_inference.ipynb)
 
 接著用 skimage 套件 transform.SimilarityTransform() 得到要變換的矩陣，利用仿射變換進行對齊。
-參考 → [link](https://www.796t.com/article.php?id=100363)
+參考 → [SKimage - transform.SimilarityTransform 相似變換 及其 人臉對齊的應用](https://www.796t.com/article.php?id=100363)
 
 **CODE**
 
@@ -231,42 +266,54 @@ cv2.destroyWindow('img')
 
 **對齊 landmark points 後的 Elon Musk**
 
-![Face_Alignment_ElonMusk.png](https://github.com/xxrjun/Face-Recognition-Python/blob/main/readme-src/Face_Alignment_ElonMusk.png)
+![face-alignment-ElonMusk.png](./assets/README/face-alignment-ElonMusk.png)
 
-做成 function 以方便調用
+模組化以方便後續調用
 
 ```python
-def face_align(img_rgb, face_landmarks):
+# in src/face_alignment.py
+
+import cv2
+import numpy as np
+from skimage import transform as trans
+
+
+def face_align(img_rgb, landmarks):
     src = np.array([
         [30.2946, 51.6963],
         [65.5318, 51.5014],
         [48.0252, 71.7366],
         [33.5493, 92.3655],
         [62.7299, 92.2041]], dtype=np.float32)
-    dst = np.array(face_landmarks, dtype=np.float32).reshape(5, 2)
+
+    dst = np.array(landmarks, dtype=np.float32).reshape(5, 2)
 
     tform = trans.SimilarityTransform()
     tform.estimate(dst, src)
-    M = tform.params[0:2, :]
-    aligned_rgb = cv2.warpAffine(img_rgb, M, (112, 112), borderValue=0)
 
-    return aligned_rgb
+    M = tform.params[0:2, :]
+
+    aligned = cv2.warpAffine(img_rgb, M, (112, 112), borderValue=0)
+
+    return aligned
+
 ```
 
-## Step 3. **Feature extraction**
+## Step 3. Feature extraction
 
-**提取人臉特徵 (landmark points)**
+> **提取人臉特徵 (landmark points)**
 
 使用 **onnx ArcFace model** 進行提取。以下兩種都可用
 
-InsightFace-REST 模型 arcface_r100_v1 → [下載](https://github.com/SthPhoenix/InsightFace-REST)
-onnx 官方模型 → [下載](https://github.com/onnx/models/tree/master/vision/body_analysis/arcface)
+- InsightFace-REST 模型 arcface_r100_v1 → [下載](https://github.com/SthPhoenix/InsightFace-REST)
+- onnx 官方模型 → [下載](https://github.com/onnx/models/tree/master/vision/body_analysis/arcface)
 
 這邊選擇前者，因為若使用 onnx 官方模型需要進行更新，而更新過程非常耗時(我自己的環境相差快五六分鐘)，
 且更新後模型準確度較差。參考 → https://github.com/onnx/models/issues/156
 
 需進行 **特徵標準化 Features Normalization**
-為甚麼要特徵標準化 ? Ans : 提升預測準確度。更詳細前往 → [link](https://www.youtube.com/watch?v=1YpKUpitT98&t=199s)
+
+> 為甚麼要特徵標準化 ? Ans : 提升預測準確度。更詳細前往 → [link](https://www.youtube.com/watch?v=1YpKUpitT98&t=199s)
 
 **CODE**
 
@@ -316,22 +363,29 @@ prediction = sess.run([first_output_name], {first_input_name: input_blob})[0]
 final_embedding = normalize(prediction).flatten()
 ```
 
-做成 function 以便調用
+模組化以方便後續調用
 
 ```python
-def feature_extract(img_rgb, detections):
-    position = []
+# in src/feature_extraction.py
+
+import numpy as np
+from face_alignment import face_align
+from sklearn.preprocessing import normalize
+
+
+def feature_extract(img_rgb, detections, sess):
+    positions = []
     landmarks = []
     embeddings = np.zeros((len(detections), 512))
     for i, face_info in enumerate(detections):
         face_position = [face_info['x1'], face_info['y1'], face_info['x2'], face_info['y2']]
-        face_landmark = [face_info['left_eye'], face_info['right_eye'],
-                         face_info['nose'], face_info['left_lip'], face_info['right_lip']]
+        face_landmarks = [face_info['left_eye'], face_info['right_eye'],
+                          face_info['nose'], face_info['left_lip'], face_info['right_lip']]
 
-        position.append(face_position)
-        landmarks.append(face_landmark)
+        positions.append(face_position)
+        landmarks.append(face_landmarks)
 
-        aligned = face_align(img_rgb, landmarks)
+        aligned = face_align(img_rgb, face_landmarks)
         t_aligned = np.transpose(aligned, (2, 0, 1))
 
         inputs = t_aligned.astype(np.float32)
@@ -343,18 +397,18 @@ def feature_extract(img_rgb, detections):
         prediction = sess.run([first_output_name], {first_input_name: input_blob})[0]
         final_embedding = normalize(prediction).flatten()
 
-        embeddings[0] = final_embedding
+        embeddings[i] = final_embedding
 
-    return position, landmarks, embeddings
+    return positions, landmarks, embeddings
 ```
 
-補 : [Deep Learning Training vs. Inference - Official NVDIA Blog](https://blogs.nvidia.com/blog/2016/08/22/difference-deep-learning-training-inference-ai/)
-After training is completed, the networks are deployed into the field for “inference” — classifying data to “infer” a
-result
+補充 : [Deep Learning Training vs. Inference - Official NVDIA Blog](https://blogs.nvidia.com/blog/2016/08/22/difference-deep-learning-training-inference-ai/)
+
+> After training is completed, the networks are deployed into the field for “inference” — classifying data to “infer” a result
 
 ## Step 4. Create Database
 
-**創建資料庫並放入照片以供我們後續進行比對**
+> **創建資料庫並放入照片以供我們後續進行比對**
 
 使用 `sqlite3` 及管理工具 DB Browser for sqlite
 參考 → [SQLite-Python](https://www.runoob.com/sqlite/sqlite-python.html)、[DB Browser 簡單介紹](https://www.minwt.com/website/server/21758.html)
@@ -440,10 +494,50 @@ if os.path.exists(file_path):
     conn_db.close()
 ```
 
-做成 function 以便調用
+模組化以方便後續調用
 
 ```python
-def create_db(db_path, file_path):
+# in src/database.py
+
+import sqlite3
+import os
+import numpy as np
+import io
+from face_detection import face_detect
+from feature_extraction import feature_extract
+
+
+def adapt_array(arr):
+    out = io.BytesIO()
+    np.save(out, arr)
+    out.seek(0)
+
+    return sqlite3.Binary(out.read())
+
+
+def convert_array(text):
+
+    out = io.BytesIO(text)
+    out.seek(0)
+    return np.load(out)
+
+
+def load_file(file_path):
+    file_data = {}
+    for person_name in os.listdir(file_path):
+        person_dir = os.path.join(file_path, person_name)
+
+        person_pictures = []
+        for picture in os.listdir(person_dir):
+            picture_path = os.path.join(person_dir, picture)
+            person_pictures.append(picture_path)
+
+        file_data[person_name] = person_pictures
+
+    return file_data
+
+
+def create_db(db_path, file_path, detector, sess):
     if os.path.exists(file_path):
         conn_db = sqlite3.connect(db_path)
         conn_db.execute("CREATE TABLE face_info \
@@ -455,8 +549,8 @@ def create_db(db_path, file_path):
             picture_path = file_data[person_name]
             sum_embeddings = np.zeros([1, 512])
             for j, picture in enumerate(picture_path):
-                img_rgb, detections = face_detect(picture)
-                position, landmarks, embeddings = feature_extract(img_rgb, detections)
+                img_rgb, detections = face_detect(picture, detector)
+                position, landmarks, embeddings = feature_extract(img_rgb, detections, sess)
                 sum_embeddings += embeddings
 
             final_embedding = sum_embeddings / len(picture_path)
@@ -468,14 +562,15 @@ def create_db(db_path, file_path):
         conn_db.close()
     else:
         print('database path does not exist')
+
 ```
 
-## Step 5. **Face Recognition**
+## Step 5. Face Recognition
 
-**將輸入的照片與資料庫中的照片進行比對**
+> **將輸入的照片與資料庫中的照片進行比對**
 
 使用 **L2-Norm** 計算之間 **最佳的距離 (distance)**，可視為兩張人臉之 **差異程度**。
-L1-Norm vs. L2-Norm → [Link](https://www.twblogs.net/a/5c80a66abd9eee35cd693c3e)
+可以參考 → [理解 L1，L2 範數在機器學習中應用](https://www.twblogs.net/a/5c80a66abd9eee35cd693c3e)
 
 給定 `threshold`，若 distance > threshold ⇒ 不同人臉，反之則視為同一張臉
 
