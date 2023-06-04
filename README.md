@@ -20,6 +20,7 @@ Demo: [Face Recognition in Python - YouTube](https://youtu.be/fTVI3yGslNE)
 
 - [Face Recognition in Python](#face-recognition-in-python)
   - [目錄](#目錄)
+  - [Tree Structure](#tree-structure)
   - [環境及模組](#環境及模組)
     - [環境安裝](#環境安裝)
     - [下載辨識模型](#下載辨識模型)
@@ -36,6 +37,33 @@ Demo: [Face Recognition in Python - YouTube](https://youtu.be/fTVI3yGslNE)
 - [Face Recognition in Picture - DEMO](#face-recognition-in-picture---demo)
 - [參考資料、網頁](#參考資料網頁)
 
+## Tree Structure
+
+```bash
+.
+├── Python_Final_109403019_Face_Reconition.pptx # 15頁簡報
+├── README.md   # 專案完整README文件
+├── assets      # 靜態資源
+│   ├── README  # README會用到的圖片
+│   ├── images  # 專案運行可選擇使用的圖片
+│   └── videos  # 專案運行可選擇使用的影片
+├── database    # 資料庫
+├── model       # 因檔案過大，若要執行程式碼需下載，請參考下方章節 -> 下載辨識模型
+├── requirements.txt   # 環境安裝所需模組
+├── src                # 專案程式碼
+│   ├── __init__.py
+│   ├── database.py
+│   ├── face_alignment.py
+│   ├── face_comparison.py
+│   ├── face_detection.py
+│   ├── face_recognition.py
+│   ├── feature_extraction.py
+│   ├── gui.py
+│   ├── main.py        # 主程式
+│   └── utils.py
+└── tree.txt       # 此資料夾內之檔案樹狀結構
+```
+
 ## 環境及模組
 
 - Python: 3.9
@@ -49,6 +77,9 @@ Demo: [Face Recognition in Python - YouTube](https://youtu.be/fTVI3yGslNE)
 
 ### 環境安裝
 
+> 由於部分套件的依賴套件較為老舊，所以不是所有平台都支援，可能需要使用 Conda 或 Venv 等虛擬環境。
+> 目前 Windows11 沒問題，不過 M2 Macbook Pro 嘗試起來好像不支援。
+
 ```
 $ pip install -r requirements.txt
 ```
@@ -57,26 +88,25 @@ $ pip install -r requirements.txt
 
 1. 安裝 pipenv
 
-    ```bash
-    $ pip install pipenv
-    ```
+   ```bash
+   $ pip install pipenv
+   ```
 
 2. 在專案目錄中創建一個新的虛擬環境，並使用 Python 3.9
 
-    > 本機系統中必須有 Python 3.9，pipenv 才能找到並使用
+   > 本機系統中必須有 Python 3.9，pipenv 才能找到並使用
 
-    ```bash
-    $ pipenv shell --python 3.9
-    ```
+   ```bash
+   $ pipenv shell --python 3.9
+   ```
 
-    這會創建一個新的虛擬環境，並且將終端機/命令行界面設置到這個虛擬環境中。
+   這會創建一個新的虛擬環境，並且將終端機/命令行界面設置到這個虛擬環境中。
 
 3. 用 pipenv 安裝 requirements.txt 文件中的所有套件
 
-    ```bash
-    pipenv install -r requirements.txt
-    ```
-
+   ```bash
+   pipenv install -r requirements.txt
+   ```
 
 ### 下載辨識模型
 
@@ -169,7 +199,7 @@ cv2.destroyWindow('img')
 **output**
 
 ```python
-[{'x1': 238, 'y1': 107, 'x2': 396, 'y2': 311, 'left_eye': (285, 191), 'right_eye': (358, 191), 
+[{'x1': 238, 'y1': 107, 'x2': 396, 'y2': 311, 'left_eye': (285, 191), 'right_eye': (358, 191),
   'nose': (326, 224), 'left_lip': (295, 265), 'right_lip': (352, 265)}]
 ```
 
