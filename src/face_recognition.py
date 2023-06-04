@@ -75,7 +75,7 @@ def recognize_video():
             # Detect faces in the frame
             img_rgb, detections = face_detect_bgr(frame, detector)
 
-            if count == fps // 1:
+            if count == fps // 3:
                 count = 0
 
                 # Extract features from the detected faces
