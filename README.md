@@ -14,6 +14,8 @@
 - 優化檔案結構、模組化
 - 除了辨識圖片外，也可以辨識影片中的人臉
 
+Demo: [Face Recognition in Python - YouTube](https://www.youtube.com/watch?v=Z2Z2YK4vLq8)
+
 ## 目錄
 
 - [Face Recognition in Python](#face-recognition-in-python)
