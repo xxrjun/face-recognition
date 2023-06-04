@@ -69,10 +69,9 @@ Demo: [Face Recognition in Python - YouTube](https://youtu.be/fTVI3yGslNE)
 - Python: 3.9
 - IDE: Pycharm
 - GUI: [Tkinter](https://docs.python.org/3/library/tk.html)
-- Face detection package: [RetinaFace](https://github.com/heewinkim/retinafacee)
-- Face recognition package: [DeepFace](https://github.com/serengil/deepface)
+- Face detection package: [RetinaFace](https://pypi.org/project/retinaface/)
 - Computer Vision Library: [OpenCV](https://opencv.org/)
-- Database: sqlite
+- Database: [sqlite3](https://docs.python.org/3/library/sqlite3.html)
 - Package Management: [pipenv](https://pypi.org/project/pipenv/)
 
 ### 環境安裝
